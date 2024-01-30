@@ -2,7 +2,7 @@ import React from "react";
 import { Avatar, Heading, VStack, HStack, Image, Text, Box, Button, Container, Flex } from "@chakra-ui/react";
 import FullScreenSection from "./FullScreenSection";
 import TestimonialCard from "./TestimonialCard";
-import { NavLink } from "react-router-dom";
+
 const testimonials = [
     {
         name: "Emily S.",
@@ -30,12 +30,9 @@ const testimonials = [
     }
 ];
 
-
-
-
-
 const TestimonialSection = () => (
   <FullScreenSection
+    id="testimonial-section"
     justifyContent="center"
     alignItems="center"
     isDarkBackground={false}
