@@ -64,26 +64,26 @@ const ReservationPage = () => {
                         <VStack spacing={8} fontSize={'lg'}>
                             <FormControl isInvalid={!!formik.errors.name && formik.touched.name}>
                                 <FormLabel htmlFor="name">Name</FormLabel>
-                                <Input type={'text'} id="name" name="Full Name" {...formik.getFieldProps("name")}></Input>
+                                <Input type={'text'} id="name" data-testid="name" name="Full Name" {...formik.getFieldProps("name")}></Input>
                                 <FormErrorMessage>{formik.errors.name}</FormErrorMessage>
                             </FormControl>
                             <FormControl isInvalid={!!formik.errors.email && formik.touched.email}>
                                 <FormLabel htmlFor="email">Email Address</FormLabel>
-                                <Input id="email" name="email" type="email" placeholder="email@example.com" {...formik.getFieldProps("email")}/>
+                                <Input id="email" name="email" data-testid="email" type="email" placeholder="email@example.com" {...formik.getFieldProps("email")}/>
                                 <FormErrorMessage>{formik.errors.email}</FormErrorMessage>
                             </FormControl>
                             <FormControl isInvalid={!!formik.errors.guests && formik.touched.guests}>
                                 <FormLabel>Number of guests</FormLabel>
-                                <Input type="number" placeholder="1" min="1" max="12" id="guests" {...formik.getFieldProps("guests")} />
+                                <Input type="number" data-testid="guests" placeholder="1" min="1" max="12" id="guests" {...formik.getFieldProps("guests")} />
                                 <FormErrorMessage>{formik.errors.guests}</FormErrorMessage>
                             </FormControl>
                             <FormControl isInvalid={!!formik.errors.date && formik.touched.date}>
                                 <FormLabel>Choose date</FormLabel>
-                                <Input type="date" id="res-date" {...formik.getFieldProps("date")}/>
+                                <Input type="date" data-testid="date" id="res-date" {...formik.getFieldProps("date")}/>
                             </FormControl>
                             <FormControl isInvalid={!!formik.errors.time && formik.touched.time}>
                                 <FormLabel htmlFor="time">Choose time</FormLabel>
-                                <Select id="time" name="time" placeholder="Choose a time" {...formik.getFieldProps("time")}>
+                                <Select id="time" name="time" data-testid="time" placeholder="Choose a time" {...formik.getFieldProps("time")}>
                                     <option value="10:00">10:00</option>
                                     <option value="11:00">11:00</option>
                                     <option value="12:00">12:00</option>

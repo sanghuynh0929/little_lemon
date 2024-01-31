@@ -1,13 +1,16 @@
 import * as React from "react";
-import { fireEvent, render, screen } from '@testing-library/react';
-import App from './App';
-import AlertContext from './context/alertContext'
+import { fireEvent, render, screen, waitFor, act } from '@testing-library/react';
+
+import { AlertProvider } from "./contexts/alertContext";
+import Alert from "./components/Alert";
+import ReservationPage from "./pages/ReservationPage";
 
 it("User is able to submit the form", async () => {
   const name = "Tom";
   const email = "tom@outlook.com";
-  const comment = "Hello, no message."
-  const handleSubmit = jest.fn();
+  const guests = "3";
+  const date = new Date(new Date() + 1);
+  const time = "21:00";
 
   const alertContext = {
     isOpen: false,
@@ -19,24 +22,26 @@ it("User is able to submit the form", async () => {
       alertContext.message = message;
     })
   };
-
-  render(
-    <AlertContext.Provider value={alertContext}>
-      <App />
-    </AlertContext.Provider>
-  );
-
-
-  const nameInput = screen.getByTestId("firstName");
+  const { container, rerender } = render(
+    <AlertProvider>
+      <ReservationPage/>
+      <Alert/>
+    </AlertProvider>
+  )
+  const nameInput = screen.getByTestId("name");
   const emailInput = screen.getByTestId("email");
-  const textArea = screen.getByTestId("comment");
-  const submitButton = screen.getByTestId("button");
+  const guestsInput = screen.getByTestId("guests");
+  const dateInput = screen.getByTestId("date");
+  const timeInput = screen.getByTestId("time");
+
+  const submitButton = screen.getByRole("button");
 
   fireEvent.change(nameInput, { target: { value: name } });
   fireEvent.change(emailInput, { target: { value: email } });
-  fireEvent.change(textArea, { target: { value: comment } });
+  fireEvent.change(guestsInput, { target: { value: guests } });
+  fireEvent.change(dateInput, { target: { value: date } });
+  fireEvent.change(timeInput, { target: { value: time } });
   fireEvent.click(submitButton);
-  console.log(screen.queryAllByTestId('alertPopup'));
-
-  expect(alertContext.onOpen).toHaveBeenCalledTimes(1);
-});
+  await new Promise(r => setTimeout(r, 2000));
+  expect(await screen.queryByRole('alertdialog')).toBeNull()
+})
