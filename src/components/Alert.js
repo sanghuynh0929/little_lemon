@@ -7,7 +7,7 @@ import {
   } from "@chakra-ui/react";
   import { useAlertContext } from "../contexts/alertContext";
   import { useRef } from "react";
-z
+
   /**
    * This is a global component that uses context to display a global alert message.
    */

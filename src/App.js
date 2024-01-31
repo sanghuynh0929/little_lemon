@@ -5,6 +5,7 @@ import { Routes, Route } from "react-router-dom";
 import ReservationsPage from "./pages/ReservationPage"
 import NotFoundPage from "./pages/NotFoundPage";
 import { AlertProvider } from "./contexts/alertContext";
+import Alert from "./components/Alert";
 
 import {ChakraProvider, extendTheme} from '@chakra-ui/react'
 
@@ -34,6 +35,7 @@ function App() {
           <Header />
           <Routes>
             <Route path="/" element={<MainPage />} />
+            <Route path="/home" element={<MainPage />} />
             <Route path="/#about" />
             <Route path="/reservations" element={<ReservationsPage/>} />
             <Route path="/menu" element={<NotFoundPage />} />
@@ -41,6 +43,7 @@ function App() {
             <Route path="/login" element={<NotFoundPage />} />
           </Routes>
           <Footer />
+          <Alert/>
         </main>
       </AlertProvider>
     </ChakraProvider>
