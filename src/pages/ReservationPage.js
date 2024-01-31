@@ -4,11 +4,11 @@ import * as Yup from 'yup';
 import FullScreenSection from "../components/FullScreenSection";
 import useSubmit from "../hooks/useSubmit";
 import { AlertProvider, useAlertContext } from "../contexts/alertContext";
-import { useEffect } from "react"
+import { React, useEffect } from "react"
 
 
 const ReservationPage = () => {
-    const { isLoading, response, submit} = useSubmit();
+    const { isLoading, response, submit } = useSubmit();
     const { onOpen } = useAlertContext();
     const formik = useFormik({
         initialValues: {
@@ -19,22 +19,24 @@ const ReservationPage = () => {
             time:"",
 
         }, /* initialValues use id ="" */
-        onSubmit: ({values}) => {submit(values)},
+        onSubmit: (values) => {submit(values)}, // submit(values)
 
         validationSchema: Yup.object({
             name: Yup.string().required("Required"),
             email: Yup.string().email("Invalid email address").required("Required"),
             guests: Yup.string().min(1,"Must be at least 1 guest").max(10,"Please call us if you have more than 10 guests").required("Required"),
-            time: Yup.string().required("Required"),
+            time: Yup.string().notOneOf([Yup.ref("Choose a time")], "Required").required("Required"),
         }),
     });
 
     useEffect(() => {
         if (response) {
-            console.log("Sent")
-            onOpen(response.type, response.message);
+            onOpen(response.type, response.message)
             if (response.type === "success") {
-                formik.resetForm();
+                // formik.resetForm();
+                console.log("success");
+            } else {
+                console.log("failed");
             }
         }
     }, [response])
@@ -76,7 +78,7 @@ const ReservationPage = () => {
                             </FormControl>
                             <FormControl isInvalid={formik.errors.time && formik.touched.time}>
                                 <FormLabel htmlFor="time">Choose time</FormLabel>
-                                <Select id="time" name="time" {...formik.getFieldProps("time")}>
+                                <Select id="time" name="time" placeholder="Choose a time" {...formik.getFieldProps("time")}>
                                     <option value="10:00">10:00</option>
                                     <option value="11:00">11:00</option>
                                     <option value="12:00">12:00</option>
@@ -91,10 +93,10 @@ const ReservationPage = () => {
                             </FormControl>
                             <Button
                              type="submit"
-                             bg={'#f4ce14'}
-                             color={'#333333'}
+                             bg={'brand.primary2'}
                              size={'lg'}
                              _hover={{bg:'yellow.500'}}
+                             isLoading={isLoading}
                              >
                                 Make Your Reservation</Button>
                         </VStack>

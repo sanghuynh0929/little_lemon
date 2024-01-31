@@ -1,16 +1,16 @@
 import {createContext, useContext, useState} from "react";
 
-const defaultContext = {
-  isOpen: false,
-  // Type can be either "success" or "error"
-  type: 'success',
-  // Message to be displayed, can be any string
-  message: '',
-}
-
-export const AlertContext = createContext(defaultContext);
+const AlertContext = createContext(undefined);
 
 export const AlertProvider = ({ children }) => {
+  const defaultContext = {
+    isOpen: false,
+    // Type can be either "success" or "failed"
+    type: 'success',
+    // Message to be displayed, can be any string
+    message: '',
+  }
+
   const [state, setState] = useState(defaultContext);
 
   return (
